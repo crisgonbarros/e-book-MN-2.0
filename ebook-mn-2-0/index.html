@@ -83,17 +83,18 @@ strong,b{font-weight:700}
 .top .safe{margin-top:.3rem}
 
 /* ---------- hero ---------- */
-.hero{padding:clamp(24px,4vw,44px) 0 0;background:radial-gradient(1200px 500px at 85% 0%,rgba(98,0,163,.55),transparent 60%),var(--night)}
+.hero{padding:clamp(14px,2vw,22px) 0 0;background:radial-gradient(1200px 500px at 85% 0%,rgba(98,0,163,.55),transparent 60%),var(--night)}
 .hero-card{
   position:relative;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0;
   background:linear-gradient(135deg,#14005e 0%,#2a0080 45%,#6200a3 100%);
   border:1px solid var(--line);border-bottom:0;color:#fff;
-  display:grid;grid-template-columns:1.1fr .9fr;align-items:end;gap:1rem;
-  padding:clamp(28px,5vw,64px) clamp(24px,5vw,64px) 0;
+  display:grid;grid-template-columns:1.12fr .88fr;grid-template-rows:auto 1fr;column-gap:1rem;
+  padding:clamp(18px,2.2vw,28px) clamp(24px,5vw,64px) 0;
 }
-.hero-copy{padding-bottom:clamp(28px,5vw,64px)}
-.hero h1{margin-bottom:1.1rem}
-.hero .lead{font-size:1.08rem;max-width:34em;margin-bottom:1.6rem;color:#efe6ff}
+.hero-title{grid-column:1/-1;grid-row:1;position:relative;z-index:2;margin:0 0 1rem;font-size:clamp(1.7rem,3.3vw,2.75rem);line-height:1.16}
+.br-d{display:none}
+.hero-copy{grid-column:1;grid-row:2;position:relative;z-index:2;padding-bottom:clamp(24px,3vw,40px)}
+.hero .lead{font-size:1rem;line-height:1.6;max-width:36em;margin-bottom:1.2rem;color:#efe6ff}
 .hero .lead strong{color:#fff}
 .price{margin:0 0 1.4rem}
 .price .was{font-size:.95rem;color:#d9c7f5}
@@ -107,12 +108,18 @@ strong,b{font-weight:700}
 .price .via{font-size:.95rem;font-weight:600;color:var(--sun);align-self:center;margin-left:1rem}
 .price .alt{margin-top:.55rem;font-size:.92rem;color:#d9c7f5}
 .price .alt b{color:#fff}
+.buy-row{display:flex;align-items:center;flex-wrap:wrap;gap:1rem 1.6rem}
+.buy-row .price{margin:0}
+.hero .price .big{font-size:clamp(2.8rem,4vw,3.6rem)}
+.hero .price .was{font-size:.85rem;margin-bottom:.1rem}
+.hero .price .alt{margin-top:.3rem;font-size:.85rem}
 .hero-actions{max-width:380px}
+.buy-row .hero-actions{flex:1 1 230px;max-width:290px}
 .hero-actions .safe{justify-content:flex-start}
 .hero-checks{list-style:none;padding:0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem 1.3rem;font-size:.85rem;color:#e7dbfa}
 .hero-checks li{display:flex;align-items:center;gap:.4rem}
 .hero-checks svg{width:15px;height:15px;color:var(--logo-green);flex:none}
-.hero-photo{align-self:end;justify-self:center;width:100%;max-width:430px}
+.hero-photo{grid-column:2;grid-row:1/3;align-self:end;justify-self:center;width:100%;max-width:400px;position:relative;z-index:1}
 .hero-photo img{width:100%;height:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.45))}
 
 /* ---------- seções ---------- */
@@ -296,9 +303,13 @@ strong,b{font-weight:700}
 .foot nav a:hover{text-decoration:underline}
 
 /* ---------- responsivo ---------- */
+@media (min-width:901px){
+  .br-d{display:inline}
+}
 @media (max-width:900px){
-  .hero-card{grid-template-columns:1fr;padding-bottom:0}
-  .hero-photo{max-width:340px;margin-top:-.5rem}
+  .hero-card{grid-template-columns:1fr;grid-template-rows:auto auto auto;padding-bottom:0}
+  .hero-copy{grid-column:1;grid-row:2}
+  .hero-photo{grid-column:1;grid-row:3;max-width:340px;margin-top:-.5rem}
   .why{grid-template-columns:1fr}
   .why .cover{max-width:240px;margin-inline:auto}
   .use,.author{grid-template-columns:1fr}
@@ -323,6 +334,15 @@ strong,b{font-weight:700}
   .cycle li{padding:.9rem .9rem .9rem 3.4rem}
   .cycle li::before{top:.75rem}
   .price .big{font-size:4rem}
+  /* hero mobile: hierarquia clara (título forte, apoio discreto) */
+  .hero-card{padding-top:26px}
+  .hero-title{font-size:2.15rem;font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:1rem}
+  .hero-title .sun{font-weight:800}
+  .hero .lead{font-size:.95rem;line-height:1.55;font-weight:400;color:#cdbbea;margin-bottom:1.3rem}
+  .hero .lead strong{font-weight:600;color:#e9dcff}
+  .lead-more{display:none}
+  .buy-row{gap:.9rem}
+  .hero-checks{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -349,19 +369,20 @@ strong,b{font-weight:700}
 <section class="hero">
   <div class="wrap">
     <div class="hero-card">
+      <h1 class="hero-title">Você sabe que algo está errado<br class="br-d"> no seu negócio.<br class="br-d"> <span class="sun nowrap">Descubra o quê.</span></h1>
       <div class="hero-copy">
-        <h1>Você sabe que algo está errado no seu negócio. <span class="sun nowrap">Descubra o quê.</span></h1>
-        <p class="lead">Um <strong>diagnóstico guiado</strong> para o empresário que trabalha muito, colhe pouco e carrega o negócio nas costas. Entenda <strong>onde você está</strong> e <strong>por que tem decidido como decide</strong>, em vez de mais um conselho genérico da internet.</p>
+        <p class="lead">Um <strong>diagnóstico guiado</strong> para o empresário que trabalha muito, colhe pouco e carrega o negócio nas costas.<span class="lead-more"> Entenda <strong>onde você está</strong> e <strong>por que tem decidido como decide</strong>.</span></p>
 
-        <div class="price" aria-label="Preço">
+        <div class="buy-row">
+          <div class="price" aria-label="Preço">
           <div class="was">De <s>R$ 247,00</s> por apenas:</div>
           <div class="now"><span class="cur">R$</span><span class="big">37</span><span class="cents">,00</span><span class="via">à vista no Pix</span></div>
           <div class="alt">ou <b>5x de R$ 8,19</b> no cartão de crédito</div>
         </div>
-
-        <div class="hero-actions">
+          <div class="hero-actions">
           <a class="btn btn--block" data-cta href="#oferta">Comprar agora</a>
           <div class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Compra <b>100%</b> segura</div>
+        </div>
         </div>
 
         <ul class="hero-checks">
