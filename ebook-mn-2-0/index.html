@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<script>document.documentElement.className+=" js"</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E-book Meu Negócio 2.0 | Descubra o que está travando o seu negócio</title>
@@ -355,9 +356,29 @@ strong,b{font-weight:700}
   .buy-row{gap:.9rem}
   .hero-checks{display:none}
 }
+
+/* ---------- animações (leves: só opacity/transform; nada na 1ª dobra fica escondido) ---------- */
+@keyframes rise{from{opacity:0;translate:0 22px}to{opacity:1;translate:0 0}}
+@keyframes pop{from{opacity:0;scale:.82}to{opacity:1;scale:1}}
+@keyframes ring{0%,62%{opacity:0;transform:scale(1)}68%{opacity:.5}100%{opacity:0;transform:scale(1.14,1.35)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.js .rv{opacity:0}
+.js .rv.in{animation:rise .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s)}
+.js .rv-pop.in{animation-name:pop}
+.btn{position:relative}
+.btn[data-cta]::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--buy);opacity:0;pointer-events:none;animation:ring 3.4s ease-out infinite}
+.top .btn::after{display:none}
+.final .rocket.in{animation:pop .6s cubic-bezier(.2,.7,.2,1) both,floaty 5s ease-in-out .7s infinite}
+.chapters li,.pillars li,.pain-list li,.cycle li,.fit>div,.faq details{transition:transform .25s,box-shadow .25s,border-color .25s}
+@media (hover:hover){
+  .chapters li:hover,.pillars li:hover,.cycle li:hover{transform:translateY(-3px)}
+  .chapters li:hover{box-shadow:0 14px 30px rgba(43,10,94,.18)}
+}
+.btn:active{transform:scale(.98)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *{transition:none!important}
+  *{transition:none!important;animation:none!important}
+  .js .rv{opacity:1}
 }
 </style>
 </head>
@@ -730,6 +751,43 @@ var CONFIG = {
     var el = document.querySelector('[data-link="' + k + '"]');
     if (el) el.setAttribute("href", CONFIG.links[k]);
   });
+})();
+/* Animações de entrada ao rolar. Sem JS ou sem IntersectionObserver, tudo aparece normal. */
+(function () {
+  if (!("IntersectionObserver" in window) ||
+      (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+    document.documentElement.className = document.documentElement.className.replace(" js", "");
+    return;
+  }
+  var sel = ".band h2, .kicker, .narrow > p, .what-box, .pull, .cta-row, .closing, .cycle h3, .again," +
+    ".pain-list li, .cycle li, .chapters li, .why .cover, .pillars li, .why-foot, .fit > div," +
+    ".use-steps, .expect, .offer-card, .offer .cover, .seal, .photo, .text, .faq details, .final .price, .final .hero-actions, .final > .wrap > p";
+  var rocket = document.querySelector(".final .rocket");
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  var hero = document.querySelector(".hero");
+  document.querySelectorAll(sel).forEach(function (el) {
+    if (hero && hero.contains(el)) return;
+    var sibs = el.parentNode.querySelectorAll(":scope > " + el.tagName.toLowerCase());
+    var i = Array.prototype.indexOf.call(sibs, el);
+    el.style.setProperty("--d", Math.min(i, 5) * 70 + "ms");
+    el.classList.add("rv");
+    if (el.matches(".seal, .offer .cover")) el.classList.add("rv-pop");
+    io.observe(el);
+  });
+  if (rocket) { rocket.classList.add("rv"); io.observe(rocket); }
+  // rede de segurança: se algo não disparar, mostra tudo após 4s
+  setTimeout(function () {
+    document.querySelectorAll(".rv:not(.in)").forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight) el.classList.add("in");
+    });
+  }, 4000);
 })();
 </script>
 </body>
