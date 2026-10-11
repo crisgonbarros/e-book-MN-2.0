@@ -102,6 +102,10 @@ section{padding:clamp(56px,8vw,96px) 0}
 .card:hover .visual img{transform:rotate(0) scale(1.05)}
 .visual svg{position:relative;z-index:1;width:84px;height:84px;color:#fff;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .card:hover .visual svg{transform:scale(1.1) rotate(-4deg)}
+.visual img.logo{height:auto;width:auto;max-width:78%;max-height:110px;aspect-ratio:auto;border-radius:0;box-shadow:none;transform:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.card:hover .visual img.logo{transform:scale(1.07) rotate(-2deg)}
+.card--soon .visual img.logo{opacity:.5;filter:grayscale(.35) drop-shadow(0 10px 18px rgba(0,0,0,.2))}
+.card--soon:hover .visual img.logo{transform:none}
 .card-body{padding:22px 24px 8px;flex:1}
 .tag{display:inline-block;font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:var(--sky);padding:.3rem .7rem;border-radius:999px;margin-bottom:.8rem}
 .card h3{font-size:1.4rem;font-weight:800;line-height:1.2}
@@ -256,7 +260,7 @@ section{padding:clamp(56px,8vw,96px) 0}
 
       <article class="card card--soon reveal" style="--d:120ms">
         <span class="badge">Em breve</span>
-        <div class="visual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1.4 2.2 3 5 3s5-1.6 5-3v-4.5"/><path d="M21 9v6"/></svg></div>
+        <div class="visual"><img class="logo" src="img/logo-wide.png" width="600" height="338" alt="Logo do Curso Meu Negócio 2.0"></div>
         <div class="card-body"><span class="tag">Curso</span><h3>Meu Negócio 2.0</h3><p class="note">Em breve, novas turmas.</p></div>
         <div class="card-foot"><a class="btn btn--ghost" data-link="vip" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>Avisar quando abrir</a></div>
       </article>
@@ -268,7 +272,7 @@ section{padding:clamp(56px,8vw,96px) 0}
       </article>
 
       <article class="card reveal" style="--d:0ms">
-        <div class="visual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="10" r="3.2"/><path d="M6.5 19c.8-3 3-4.5 5.5-4.5s4.7 1.5 5.5 4.5"/><path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2"/></svg></div>
+        <div class="visual"><img class="logo" src="img/logo-avaliacao-horizontal-branco.webp" width="720" height="225" alt="Logo da Avaliação de Identidade"></div>
         <div class="card-body"><span class="tag">Avaliação</span><h3>Avaliação de Identidade</h3></div>
         <div class="card-foot"><a class="btn btn--primary" data-link="identidade" href="#produtos">Quero conhecer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
       </article>
