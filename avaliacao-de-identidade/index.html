@@ -110,14 +110,13 @@ section{padding:88px 0;scroll-margin-top:12px}
 .h-rest .hero-sub{order:1;margin-bottom:16px}
 .h-rest .cta-row{order:2;margin-bottom:20px}
 .h-rest .lead{order:3}
-.visual{position:relative;width:100%;max-width:320px;margin:0 auto;aspect-ratio:1/.9}
-@media (max-width:959px) and (max-height:740px){.visual{max-width:240px}.hero .wrap{gap:12px}.hero h1{font-size:30px}}
+.visual{position:relative;width:100%;max-width:310px;margin:0 auto;aspect-ratio:1/.9}
 .visual .photo{position:absolute;left:0;bottom:0;width:58%;z-index:2}
-.tiles{position:absolute;right:0;top:12%;width:44%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px;row-gap:6px;z-index:1}
+.tiles{position:absolute;right:0;top:12%;width:46%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px;row-gap:6px;z-index:1}
 .tiles img{width:100%;filter:drop-shadow(0 10px 14px rgba(22,24,27,.25))}
 .tiles figure{margin:0;text-align:center;min-width:0}
 .tiles img{aspect-ratio:1/.96;object-fit:contain}
-.tiles figcaption{font:700 clamp(9px,2.6vw,13px)/1.2 "Montserrat",sans-serif;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:visible}
+.tiles figcaption{font:700 10px/1.2 "Montserrat",sans-serif;letter-spacing:-.01em;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:visible}
 @media (min-width:960px){
   .hero .wrap{grid-template-columns:1.12fr .88fr;grid-template-areas:". visual" "head visual" "rest visual" ". visual";grid-template-rows:1fr auto auto 1.2fr;column-gap:20px;row-gap:0;min-height:clamp(480px,calc(100svh - 84px),720px)}
   .hero h1{font-size:clamp(38px,3.7vw,52px)}
@@ -128,6 +127,7 @@ section{padding:88px 0;scroll-margin-top:12px}
   .visual{align-self:end;justify-self:end;width:auto;max-width:none;height:clamp(460px,calc(100svh - 84px),720px);aspect-ratio:1/1.08;margin:0}
   .visual .photo{width:62%}
   .tiles{top:22%;width:42%}
+  .tiles figcaption{font-size:13px;letter-spacing:.02em}
 }
 /* Identificação */
 .pains{list-style:none;margin:40px 0 0;padding:0;display:grid;gap:14px;grid-template-columns:1fr}
