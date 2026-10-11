@@ -113,10 +113,11 @@ section{padding:88px 0;scroll-margin-top:12px}
 .visual{position:relative;width:100%;max-width:320px;margin:0 auto;aspect-ratio:1/.9}
 @media (max-width:959px) and (max-height:740px){.visual{max-width:240px}.hero .wrap{gap:12px}.hero h1{font-size:30px}}
 .visual .photo{position:absolute;left:0;bottom:0;width:58%;z-index:2}
-.tiles{position:absolute;right:0;top:12%;width:44%;display:grid;grid-template-columns:1fr 1fr;gap:4%;z-index:1}
+.tiles{position:absolute;right:0;top:12%;width:44%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px;row-gap:6px;z-index:1}
 .tiles img{width:100%;filter:drop-shadow(0 10px 14px rgba(22,24,27,.25))}
-.tiles figure{margin:0;text-align:center}
-.tiles figcaption{font:700 clamp(10px,1.4vw,13px)/1.2 "Montserrat",sans-serif;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+.tiles figure{margin:0;text-align:center;min-width:0}
+.tiles img{aspect-ratio:1/.96;object-fit:contain}
+.tiles figcaption{font:700 clamp(9px,2.6vw,13px)/1.2 "Montserrat",sans-serif;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:visible}
 @media (min-width:960px){
   .hero .wrap{grid-template-columns:1.12fr .88fr;grid-template-areas:". visual" "head visual" "rest visual" ". visual";grid-template-rows:1fr auto auto 1.2fr;column-gap:20px;row-gap:0;min-height:clamp(480px,calc(100svh - 84px),720px)}
   .hero h1{font-size:clamp(38px,3.7vw,52px)}
@@ -332,11 +333,11 @@ section{padding:88px 0;scroll-margin-top:12px}
 /* Animações */
 .js .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .js .rv.in{opacity:1;transform:none}
-.js .tiles figure{opacity:0;transform:scale(.6) rotate(-6deg);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.9,.3,1.4)}
-.js .tiles.in figure{opacity:1;transform:none}
-.tiles figure:nth-child(2){transition-delay:.12s}.tiles figure:nth-child(3){transition-delay:.24s}.tiles figure:nth-child(4){transition-delay:.36s}
-.js .visual .photo{opacity:0;transform:translateX(-24px);transition:opacity .8s ease,transform .8s ease}
-.js .visual.in .photo{opacity:1;transform:none}
+@keyframes tileIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+@keyframes photoIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+.tiles figure{animation:tileIn .55s cubic-bezier(.2,.9,.3,1.25) both}
+.tiles figure:nth-child(2){animation-delay:.1s}.tiles figure:nth-child(3){animation-delay:.2s}.tiles figure:nth-child(4){animation-delay:.3s}
+.visual .photo{animation:photoIn .7s ease both}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important;animation:none!important}
@@ -824,7 +825,7 @@ document.querySelectorAll(".flip").forEach(function (b) {
       if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
     });
   }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
-  document.querySelectorAll(".rv, .visual, .tiles").forEach(function (el) { io.observe(el); });
+  document.querySelectorAll(".rv").forEach(function (el) { io.observe(el); });
 
   var stack = document.getElementById("stack");
   var io2 = new IntersectionObserver(function (es) {
