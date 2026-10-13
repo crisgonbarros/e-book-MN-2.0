@@ -2,6 +2,13 @@
 <html lang="pt-BR">
 <head>
 <script>document.documentElement.className+=" js"</script>
+<!-- Meta Pixel (Meu Negócio 2.0) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2497186187405041');
+fbq('track','PageView');
+</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E-book Meu Negócio 2.0 | Descubra o que está travando o seu negócio</title>
@@ -383,6 +390,7 @@ strong,b{font-weight:700}
 </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2497186187405041&ev=PageView&noscript=1"></noscript>
 
 <!-- ============ CABEÇALHO ============ -->
 <header class="top">
@@ -729,6 +737,9 @@ strong,b{font-weight:700}
 var CONFIG = {
   // Link de checkout (Kiwify ou Hotmart). Todos os botões "comprar" usam este endereço.
   checkout: "https://pay.hotmart.com/M104052197B?off=0wntsn0u",
+  // Evento enviado à Meta quando alguém clica em "Comprar agora" (InitiateCheckout).
+  // Se o preço da oferta mudar, troque o valor aqui.
+  pixel: { value: 37, currency: "BRL", name: "E-book Meu Negócio 2.0" },
   // Links do rodapé. Deixe vazio para manter o "#".
   links: {
     linkedin: "https://www.linkedin.com/in/cristiano-barros1/",
@@ -746,6 +757,25 @@ var CONFIG = {
       a.setAttribute("href", CONFIG.checkout);
     });
   }
+  /* Pixel: avisa a Meta do clique no checkout e só então abre a Hotmart */
+  document.querySelectorAll("[data-cta]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var href = a.getAttribute("href");
+      try {
+        if (window.fbq) {
+          fbq("track", "InitiateCheckout", {
+            value: CONFIG.pixel.value, currency: CONFIG.pixel.currency,
+            content_name: CONFIG.pixel.name, content_type: "product"
+          });
+        }
+      } catch (err) {}
+      // dá um instante para o evento sair antes de trocar de página (só se o pixel carregou)
+      if (!window.fbq || !fbq.callMethod || !href || href.charAt(0) === "#" ||
+          e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      setTimeout(function () { window.location.href = href; }, 200);
+    });
+  });
   Object.keys(CONFIG.links).forEach(function (k) {
     if (!CONFIG.links[k]) return;
     var el = document.querySelector('[data-link="' + k + '"]');
