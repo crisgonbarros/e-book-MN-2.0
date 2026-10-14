@@ -50,8 +50,8 @@ fbq('track','PageView');
   --sun:#ffd633;
   --logo-orange:#fdbb5a;
   --logo-green:#6bb82d;
-  --buy:#049a1c;
-  --buy-hover:#05b022;
+  --buy:#03851a;
+  --buy-hover:#049a1c;
   --line:rgba(255,255,255,.18);
   --radius:20px;
   --wrap:1080px;
@@ -88,10 +88,10 @@ strong,b{font-weight:700}
   background:var(--buy);color:#fff;text-decoration:none;font-weight:700;
   font-size:1.02rem;letter-spacing:.04em;text-transform:uppercase;
   padding:1.05rem 2.1rem;border-radius:999px;min-height:56px;
-  box-shadow:0 8px 24px rgba(4,154,28,.35),inset 0 -3px 0 rgba(0,0,0,.14);
+  box-shadow:0 8px 24px rgba(3,133,26,.35),inset 0 -3px 0 rgba(0,0,0,.14);
   transition:background .2s,transform .2s,box-shadow .2s;
 }
-.btn:hover{background:var(--buy-hover);transform:translateY(-2px);box-shadow:0 12px 28px rgba(4,154,28,.45),inset 0 -3px 0 rgba(0,0,0,.14)}
+.btn:hover{background:var(--buy-hover);transform:translateY(-2px);box-shadow:0 12px 28px rgba(3,133,26,.45),inset 0 -3px 0 rgba(0,0,0,.14)}
 .btn:active{transform:translateY(0)}
 .btn--sm{padding:.7rem 1.5rem;min-height:46px;font-size:.92rem}
 .btn--block{width:100%}
@@ -351,8 +351,9 @@ strong,b{font-weight:700}
 @media (max-width:640px){
   body{font-size:16px}
   .top img{height:50px}
-  #oferta{scroll-margin-top:66px}
-  .top .safe{display:none}
+  #oferta{scroll-margin-top:84px}
+  .top .safe{font-size:.68rem;margin-top:.2rem;gap:.3rem}
+  .top .safe svg{width:12px;height:12px}
   .btn{width:100%}
   .top .btn{width:auto;padding:.65rem 1.1rem;font-size:.82rem;min-height:42px}
   .fit{grid-template-columns:1fr}
