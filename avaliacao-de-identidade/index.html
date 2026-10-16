@@ -2,6 +2,12 @@
 <html lang="pt-BR">
 <head>
 <script>document.documentElement.className+=" js"</script>
+<!-- Meta Pixel (Meu Negócio 2.0) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2497186187405041');
+fbq('track','PageView');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Avaliação de Identidade | 4 testes + devolutiva individual</title>
@@ -357,6 +363,7 @@ section{padding:88px 0;scroll-margin-top:12px}
 </script>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=2497186187405041&ev=PageView&noscript=1"></noscript>
 
 <!-- ============ CABEÇALHO ============ -->
 <header class="top">
@@ -787,6 +794,8 @@ var CONFIG = {
   // WhatsApp para dúvidas (código do país + DDD + número, só números)
   whatsapp: "5567992481500",
   whatsappMsg: "Olá! Vim da página da Avaliação de Identidade e tenho uma dúvida.",
+  // Dados enviados ao Pixel da Meta no clique de compra
+  pixel: { value: 697, currency: "BRL", name: "Avaliação de Identidade" },
   // Links do rodapé. Deixe vazio para manter o "#".
   links: {
     linkedin: "https://www.linkedin.com/in/cristiano-barros1/",
@@ -800,6 +809,31 @@ var CONFIG = {
   if (CONFIG.checkout) {
     document.querySelectorAll("[data-cta]").forEach(function (a) { a.setAttribute("href", CONFIG.checkout); });
   }
+  /* Pixel: avisa a Meta do clique no checkout e só então abre a Hotmart */
+  document.querySelectorAll("[data-cta]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var href = a.getAttribute("href");
+      try {
+        if (window.fbq) {
+          fbq("track", "InitiateCheckout", {
+            value: CONFIG.pixel.value, currency: CONFIG.pixel.currency,
+            content_name: CONFIG.pixel.name, content_type: "product"
+          });
+        }
+      } catch (err) {}
+      // dá um instante para o evento sair antes de trocar de página (só se o pixel carregou)
+      if (!window.fbq || !fbq.callMethod || !href || href.charAt(0) === "#" ||
+          e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      setTimeout(function () { window.location.href = href; }, 200);
+    });
+  });
+  /* Pixel: clique no WhatsApp de dúvidas vira evento de contato */
+  document.querySelectorAll("[data-wa]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      try { if (window.fbq) fbq("track", "Contact", { content_name: CONFIG.pixel.name }); } catch (err) {}
+    });
+  });
   if (CONFIG.whatsapp) {
     var wa = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(CONFIG.whatsappMsg);
     document.querySelectorAll("[data-wa]").forEach(function (a) { a.setAttribute("href", wa); });
