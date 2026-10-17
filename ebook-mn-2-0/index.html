@@ -758,7 +758,7 @@ strong,b{font-weight:700}
       <div class="alt">à vista no Pix, ou <b>10x de R$ 4,45</b> no cartão</div>
     </div>
     <div class="hero-actions">
-      <a class="btn btn--block" data-go href="#oferta">Comprar agora</a>
+      <a class="btn btn--block" data-cta href="#oferta">Comprar agora</a>
       <div class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Compra <b>100%</b> segura, com 7 dias de garantia</div>
     </div>
   </div>
@@ -884,7 +884,7 @@ var CONFIG = {
 };
 
 (function () {
-  // Só o botão da dobra de preço (data-cta) leva ao checkout; os demais (data-go) rolam até #oferta.
+  // Botões da dobra de preço e abaixo dela (data-cta) levam ao checkout; os de cima (data-go) rolam até #oferta.
   if (CONFIG.checkout) {
     document.querySelectorAll("[data-cta]").forEach(function (a) {
       a.setAttribute("href", CONFIG.checkout);
