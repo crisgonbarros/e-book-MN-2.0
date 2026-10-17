@@ -57,6 +57,8 @@ fbq('track','PageView');
   --wrap:1080px;
 }
 *,*::before,*::after{box-sizing:border-box}
+/* o brilho pulsante dos botões não pode criar rolagem lateral no celular */
+html,body{overflow-x:clip}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--night);color:var(--ink);
@@ -384,6 +386,11 @@ strong,b{font-weight:700}
 @keyframes pop{from{opacity:0;scale:.82}to{opacity:1;scale:1}}
 @keyframes ring{0%,62%{opacity:0;transform:scale(1)}68%{opacity:.5}100%{opacity:0;transform:scale(1.14,1.35)}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+/* telas bem estreitas (iPhone SE 1ª geração, Androids antigos): "Descubra o quê." cabe sem cortar */
+@media (max-width:359px){
+  .hero-card{padding-left:18px;padding-right:18px}
+  .hero-title{font-size:1.72rem}
+}
 /* ---------- preço odômetro (dobra de investimento) ---------- */
 .mn-price{--mn-g1:#fff6c9;--mn-g2:#ffd633;--mn-g3:#f1b92f;--mn-shine:rgba(255,255,255,.95);--mn-glow:rgba(255,214,51,.38);--mn-cur:#fff;--mn-text:#d9c7f5;--mn-accent:#ffd633;--mn-h:1em}
 .mn-price .mn-cur,.mn-price .mn-cents{color:var(--mn-cur)}
@@ -403,7 +410,7 @@ strong,b{font-weight:700}
 .mn-shine .mn-strip i{animation:mn-shine .95s cubic-bezier(.4,0,.2,1) var(--mn-sd,0s) 1 both}
 @keyframes mn-shine{from{background-position:150% 0,0 0}to{background-position:-60% 0,0 0}}
 .mn-now{position:relative;isolation:isolate}
-.mn-now::before{content:"";position:absolute;z-index:-1;inset:-34% -14%;border-radius:50%;background:radial-gradient(closest-side,var(--mn-glow) 0%,rgba(255,214,51,.14) 52%,rgba(255,214,51,0) 100%);opacity:0;scale:.6;transition:opacity .6s ease,scale .9s cubic-bezier(.2,.8,.3,1.2);pointer-events:none}
+.mn-now::before{content:"";position:absolute;z-index:-1;inset:-34% 0;border-radius:50%;background:radial-gradient(closest-side,var(--mn-glow) 0%,rgba(255,214,51,.14) 52%,rgba(255,214,51,0) 100%);opacity:0;scale:.6;transition:opacity .6s ease,scale .9s cubic-bezier(.2,.8,.3,1.2);pointer-events:none}
 .mn-armed.mn-pop .mn-now::before{opacity:1;scale:1}
 .mn-notrans,.mn-notrans *{transition:none!important;animation:none!important}
 .mn-armed .mn-was,.mn-armed .mn-alt,.mn-armed .mn-via{opacity:0;transform:translateY(8px);filter:blur(4px)}
