@@ -384,29 +384,34 @@ strong,b{font-weight:700}
 @keyframes pop{from{opacity:0;scale:.82}to{opacity:1;scale:1}}
 @keyframes ring{0%,62%{opacity:0;transform:scale(1)}68%{opacity:.5}100%{opacity:0;transform:scale(1.14,1.35)}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-/* ---------- preço caça-níquel (dobra de investimento) ---------- */
-.mn-price{--mn-num:#fff;--mn-cur:#fff;--mn-text:#d9c7f5;--mn-accent:#ffd633;--mn-h:1em}
+/* ---------- preço odômetro (dobra de investimento) ---------- */
+.mn-price{--mn-g1:#fff6c9;--mn-g2:#ffd633;--mn-g3:#f1b92f;--mn-shine:rgba(255,255,255,.95);--mn-glow:rgba(255,214,51,.38);--mn-cur:#fff;--mn-text:#d9c7f5;--mn-accent:#ffd633;--mn-h:1em}
 .mn-price .mn-cur,.mn-price .mn-cents{color:var(--mn-cur)}
-.mn-price .mn-big{color:var(--mn-num)}
 .mn-price .mn-was,.mn-price .mn-alt{color:var(--mn-text)}
 .mn-price .mn-via{color:var(--mn-accent)}
+.mn-price .mn-big{background:linear-gradient(180deg,var(--mn-g1) 0%,var(--mn-g2) 52%,var(--mn-g3) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.mn-price .mn-big.mn-built{background:none;-webkit-text-fill-color:currentColor}
 .mn-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .mn-reels{display:inline-flex;line-height:var(--mn-h);height:var(--mn-h);vertical-align:bottom}
-.mn-reel{position:relative;display:block;width:var(--mn-w,.62em);height:var(--mn-h);overflow:hidden;text-align:center}
-.mn-strip{display:block;transform:translateY(calc(var(--mn-from)*var(--mn-h)*-1));will-change:transform}
-.mn-strip i{display:block;height:var(--mn-h);line-height:var(--mn-h);font-style:normal}
-.mn-run .mn-strip{transform:translateY(calc(var(--mn-to)*var(--mn-h)*-1));transition:transform var(--mn-dur) cubic-bezier(.12,.62,.18,1)}
-.mn-strip{transition:filter .28s ease}
-.mn-reel.mn-blur .mn-strip{filter:blur(1.8px)}
-.mn-reel.mn-blur{-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
-.mn-reel{transition:width .36s ease,opacity .28s ease}
-.mn-reel.mn-gone{width:0;opacity:0}
+.mn-reel{position:relative;display:block;width:var(--mn-w,.62em);height:var(--mn-h);overflow:hidden;text-align:center;transition:width .42s cubic-bezier(.5,0,.2,1),opacity .3s ease,filter .34s ease}
+.mn-reel.mn-gone{width:0;opacity:0;filter:blur(7px)}
+.mn-strip{display:block;transform:translateY(calc(var(--mn-from)*var(--mn-h)*-1));will-change:transform;transition:filter .3s ease}
+.mn-strip i{display:block;height:var(--mn-h);line-height:var(--mn-h);font-style:normal;background:linear-gradient(105deg,transparent 0 38%,var(--mn-shine) 50%,transparent 62% 100%) 150% 0/260% 100% no-repeat,linear-gradient(180deg,var(--mn-g1) 0%,var(--mn-g2) 52%,var(--mn-g3) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.mn-reel.mn-blur .mn-strip{filter:blur(2.2px)}
+.mn-reel.mn-blur{-webkit-mask-image:linear-gradient(transparent,#000 16%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 16%,#000 84%,transparent)}
+.mn-end .mn-strip{transform:translateY(calc(var(--mn-to)*var(--mn-h)*-1))}
+.mn-shine .mn-strip i{animation:mn-shine .95s cubic-bezier(.4,0,.2,1) var(--mn-sd,0s) 1 both}
+@keyframes mn-shine{from{background-position:150% 0,0 0}to{background-position:-60% 0,0 0}}
+.mn-now{position:relative;isolation:isolate}
+.mn-now::before{content:"";position:absolute;z-index:-1;inset:-34% -14%;border-radius:50%;background:radial-gradient(closest-side,var(--mn-glow) 0%,rgba(255,214,51,.14) 52%,rgba(255,214,51,0) 100%);opacity:0;scale:.6;transition:opacity .6s ease,scale .9s cubic-bezier(.2,.8,.3,1.2);pointer-events:none}
+.mn-armed.mn-pop .mn-now::before{opacity:1;scale:1}
 .mn-notrans,.mn-notrans *{transition:none!important;animation:none!important}
-.mn-armed .mn-was,.mn-armed .mn-alt,.mn-armed .mn-via{opacity:0;transform:translateY(6px)}
-.mn-armed.mn-done .mn-was,.mn-armed.mn-done .mn-alt,.mn-armed.mn-done .mn-via{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
-.mn-armed.mn-done .mn-alt{transition-delay:.12s}
-.mn-armed.mn-pop .mn-now{animation:mn-pop .38s cubic-bezier(.2,.8,.3,1.4)}
-@keyframes mn-pop{0%{scale:1}45%{scale:1.13}100%{scale:1}}
+.mn-armed .mn-was,.mn-armed .mn-alt,.mn-armed .mn-via{opacity:0;transform:translateY(8px);filter:blur(4px)}
+.mn-armed.mn-done .mn-was,.mn-armed.mn-done .mn-alt,.mn-armed.mn-done .mn-via{opacity:1;transform:none;filter:none;transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.3,1),filter .6s ease}
+.mn-armed.mn-done .mn-alt{transition-delay:.14s}
+.mn-armed.mn-done .mn-via{transition-delay:.07s}
+.mn-armed.mn-pop .mn-now{animation:mn-pop .62s cubic-bezier(.2,.9,.3,1.35)}
+@keyframes mn-pop{0%{scale:1}38%{scale:1.14}68%{scale:.985}100%{scale:1}}
 .js .rv{opacity:0}
 .js .rv.in{animation:rise .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s)}
 .js .rv-pop.in{animation-name:pop}
@@ -786,7 +791,8 @@ strong,b{font-weight:700}
 </footer>
 
 <script>
-/* Preço caça-níquel: gira de data-de até data-por toda vez que a dobra entra na tela. */
+/* Preço odômetro: cada dígito sobe com inércia, passa do ponto e assenta como uma mola,
+   de data-de até data-por, toda vez que a dobra entra na tela. */
 (function () {
   var root = document.querySelector(".mn-price[data-de][data-por]");
   if (!root || !("IntersectionObserver" in window)) return;
@@ -800,16 +806,18 @@ strong,b{font-weight:700}
   var fmt = function (v) { return String(parseInt(v, 10)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); };
   if (was) was.textContent = "R$ " + fmt(de) + ",00";
   var label = String(parseInt(por, 10));
-  var reels = [], html = "";
+  var html = "", dur = [], cyc = [];
   for (var i = 0; i < n; i++) {
     var cycles = 2 + i, items = "";
     for (var k = 0; k < (cycles + 1) * 10; k++) items += "<i>" + (k % 10) + "</i>";
     var lead = por.charAt(i) === "0" && /^0*$/.test(por.slice(0, i + 1));
+    cyc.push(cycles); dur.push(1000 + i * 420);
     html += '<span class="mn-reel' + (lead ? " mn-lead" : "") + '" style="--mn-from:' + de.charAt(i) +
-      ";--mn-to:" + (parseInt(por.charAt(i), 10) + 10 * cycles) + ";--mn-dur:" + (0.85 + i * 0.4).toFixed(2) +
+      ";--mn-to:" + (parseInt(por.charAt(i), 10) + 10 * cycles) + ";--mn-sd:" + (i * 0.09).toFixed(2) +
       's"><span class="mn-strip">' + items + "</span></span>";
   }
   big.innerHTML = '<span class="mn-sr">' + label + '</span><span class="mn-reels" aria-hidden="true">' + html + "</span>";
+  big.classList.add("mn-built");
   var reelEls = [].slice.call(big.querySelectorAll(".mn-reel"));
   // largura de cada rolo = largura real do dígito final (o "37" fica igual ao texto original)
   function measure() {
@@ -825,12 +833,13 @@ strong,b{font-weight:700}
   measure();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   root.classList.add("mn-armed");
-  var timers = [], playing = false;
+  var timers = [], anims = [], playing = false;
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
   function reset() {
     timers.forEach(clearTimeout); timers = [];
+    anims.forEach(function (a) { try { a.cancel(); } catch (e) {} }); anims = [];
     root.classList.add("mn-notrans");
-    root.classList.remove("mn-run", "mn-done", "mn-pop");
+    root.classList.remove("mn-end", "mn-done", "mn-pop", "mn-shine");
     reelEls.forEach(function (r) { r.classList.remove("mn-gone", "mn-blur"); });
     void root.offsetWidth;
     root.classList.remove("mn-notrans");
@@ -839,17 +848,26 @@ strong,b{font-weight:700}
   function play() {
     reset(); playing = true;
     later(function () {
-      root.classList.add("mn-run");
-      var last = 0.85 + (n - 1) * 0.4;
+      var last = dur[n - 1];
       reelEls.forEach(function (r, i) {
+        var strip = r.firstChild, from = parseInt(de.charAt(i), 10), to = parseInt(por.charAt(i), 10) + 10 * cyc[i];
+        var h = function (v) { return "translateY(" + (-v) + "em)"; };
         r.classList.add("mn-blur");
-        later(function () { r.classList.remove("mn-blur"); }, (0.85 + i * 0.4 - 0.4) * 1000);
+        if (strip.animate) {
+          // sobe rápido, passa um pouco do dígito e assenta (efeito de mola)
+          anims.push(strip.animate([
+            { transform: h(from), easing: "cubic-bezier(.4,.02,.18,1)" },
+            { transform: h(to + 0.34), offset: 0.78, easing: "cubic-bezier(.35,0,.25,1)" },
+            { transform: h(to) }
+          ], { duration: dur[i], fill: "forwards" }));
+        } else { r.classList.remove("mn-blur"); root.classList.add("mn-end"); }
+        later(function () { r.classList.remove("mn-blur"); }, dur[i] * 0.66);
       });
       later(function () {
         reelEls.forEach(function (r) { if (r.classList.contains("mn-lead")) r.classList.add("mn-gone"); });
-      }, (0.85 + Math.max(n - 2, 0) * 0.4) * 1000);
-      later(function () { root.classList.add("mn-pop"); }, last * 1000 + 250);
-      later(function () { root.classList.add("mn-done"); }, last * 1000 + 450);
+      }, dur[Math.max(n - 2, 0)] * 0.74);
+      later(function () { root.classList.add("mn-pop", "mn-shine"); }, last * 0.9);
+      later(function () { root.classList.add("mn-done"); }, last * 0.9 + 260);
     }, 650);
   }
   var io = new IntersectionObserver(function (es) {
