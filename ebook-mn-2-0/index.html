@@ -288,6 +288,11 @@ strong,b{font-weight:700}
 /* garantia */
 .guarantee{display:grid;justify-items:center;text-align:center;gap:1.4rem}
 .seal{width:170px;height:170px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.35))}
+.mn-seal-burst,.mn-seal-ring{transform-origin:100px 100px}
+.mn-seal-burst{animation:mn-spin-ccw 60s linear infinite}
+.mn-seal-ring{animation:mn-spin-cw 32s linear infinite}
+@keyframes mn-spin-cw{to{transform:rotate(360deg)}}
+@keyframes mn-spin-ccw{to{transform:rotate(-360deg)}}
 .guarantee h2{letter-spacing:.02em}
 .guarantee p{max-width:36em;color:#f1e8ff;margin:0}
 .guarantee h2{margin:0}
@@ -394,7 +399,7 @@ strong,b{font-weight:700}
 .mn-strip{transition:filter .28s ease}
 .mn-reel.mn-blur .mn-strip{filter:blur(1.8px)}
 .mn-reel.mn-blur{-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
-.mn-reel{transition:width .5s ease,opacity .4s ease}
+.mn-reel{transition:width .36s ease,opacity .28s ease}
 .mn-reel.mn-gone{width:0;opacity:0}
 .mn-notrans,.mn-notrans *{transition:none!important;animation:none!important}
 .mn-armed .mn-was,.mn-armed .mn-alt,.mn-armed .mn-via{opacity:0;transform:translateY(6px)}
@@ -685,20 +690,17 @@ strong,b{font-weight:700}
         <radialGradient id="navy" cx=".5" cy=".42" r=".7">
           <stop offset="0" stop-color="#26286b"/><stop offset="1" stop-color="#070a2e"/>
         </radialGradient>
-        <path id="arcTop" d="M 36,100 A 64,64 0 0 1 164,100"/>
-        <path id="arcBot" d="M 28,100 A 72,72 0 0 0 172,100"/>
+        <path id="ringPath" d="M 38,100 A 62,62 0 1 1 162,100 A 62,62 0 1 1 38,100"/>
       </defs>
-      <polygon fill="url(#gold)" points="100.0,3.0 110.1,10.6 121.6,5.4 129.7,15.1 142.1,12.6 147.9,23.8 160.5,24.2 163.6,36.4 175.8,39.5 176.2,52.1 187.4,57.9 184.9,70.3 194.6,78.4 189.4,89.9 197.0,100.0 189.4,110.1 194.6,121.6 184.9,129.7 187.4,142.1 176.2,147.9 175.8,160.5 163.6,163.6 160.5,175.8 147.9,176.2 142.1,187.4 129.7,184.9 121.6,194.6 110.1,189.4 100.0,197.0 89.9,189.4 78.4,194.6 70.3,184.9 57.9,187.4 52.1,176.2 39.5,175.8 36.4,163.6 24.2,160.5 23.8,147.9 12.6,142.1 15.1,129.7 5.4,121.6 10.6,110.1 3.0,100.0 10.6,89.9 5.4,78.4 15.1,70.3 12.6,57.9 23.8,52.1 24.2,39.5 36.4,36.4 39.5,24.2 52.1,23.8 57.9,12.6 70.3,15.1 78.4,5.4 89.9,10.6"/>
-      <circle cx="100" cy="100" r="84" fill="none" stroke="#7a4a05" stroke-width="2.5"/>
+      <g class="mn-seal-burst"><polygon fill="url(#gold)" points="100.0,3.0 110.1,10.6 121.6,5.4 129.7,15.1 142.1,12.6 147.9,23.8 160.5,24.2 163.6,36.4 175.8,39.5 176.2,52.1 187.4,57.9 184.9,70.3 194.6,78.4 189.4,89.9 197.0,100.0 189.4,110.1 194.6,121.6 184.9,129.7 187.4,142.1 176.2,147.9 175.8,160.5 163.6,163.6 160.5,175.8 147.9,176.2 142.1,187.4 129.7,184.9 121.6,194.6 110.1,189.4 100.0,197.0 89.9,189.4 78.4,194.6 70.3,184.9 57.9,187.4 52.1,176.2 39.5,175.8 36.4,163.6 24.2,160.5 23.8,147.9 12.6,142.1 15.1,129.7 5.4,121.6 10.6,110.1 3.0,100.0 10.6,89.9 5.4,78.4 15.1,70.3 12.6,57.9 23.8,52.1 24.2,39.5 36.4,36.4 39.5,24.2 52.1,23.8 57.9,12.6 70.3,15.1 78.4,5.4 89.9,10.6"/>
+      <circle cx="100" cy="100" r="84" fill="none" stroke="#7a4a05" stroke-width="2.5"/></g>
       <circle cx="100" cy="100" r="80" fill="url(#gold)"/>
-      <circle cx="100" cy="100" r="53" fill="url(#navy)" stroke="#7a4a05" stroke-width="2.5"/>
-      <g fill="#10123d" font-family="Montserrat,sans-serif" font-weight="800" font-size="15" letter-spacing="3">
-        <text text-anchor="middle"><textPath href="#arcTop" startOffset="50%">GARANTIA</textPath></text>
-        <text text-anchor="middle" dominant-baseline="hanging" dy="-1"><textPath href="#arcBot" startOffset="50%">GARANTIA</textPath></text>
+      <g class="mn-seal-ring" fill="#10123d" font-family="Montserrat,sans-serif" font-weight="800" font-size="13">
+        <text><textPath href="#ringPath" textLength="386" lengthAdjust="spacing">GARANTIA • 7 DIAS • GARANTIA • 7 DIAS • </textPath></text>
       </g>
+      <circle cx="100" cy="100" r="53" fill="url(#navy)" stroke="#7a4a05" stroke-width="2.5"/>
       <text x="100" y="112" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="800" font-size="56" fill="#ffd96a">7</text>
       <text x="100" y="133" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="15" letter-spacing="2" fill="#ffd96a">DIAS</text>
-      <g fill="#10123d"><path d="M26 98l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" transform="translate(2 -4) scale(.9)"/><path d="M174 98l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" transform="translate(-2 -4) scale(.9)" /></g>
     </svg>
     <h2>Você tem 7 dias de garantia incondicional</h2>
     <p>Inicie a leitura do e-book com calma e veja se ele faz sentido para o seu momento e para o seu negócio.</p>
@@ -809,7 +811,7 @@ strong,b{font-weight:700}
     for (var k = 0; k < (cycles + 1) * 10; k++) items += "<i>" + (k % 10) + "</i>";
     var lead = por.charAt(i) === "0" && /^0*$/.test(por.slice(0, i + 1));
     html += '<span class="mn-reel' + (lead ? " mn-lead" : "") + '" style="--mn-from:' + de.charAt(i) +
-      ";--mn-to:" + (parseInt(por.charAt(i), 10) + 10 * cycles) + ";--mn-dur:" + (1 + i * 0.5).toFixed(2) +
+      ";--mn-to:" + (parseInt(por.charAt(i), 10) + 10 * cycles) + ";--mn-dur:" + (0.85 + i * 0.4).toFixed(2) +
       's"><span class="mn-strip">' + items + "</span></span>";
   }
   big.innerHTML = '<span class="mn-sr">' + label + '</span><span class="mn-reels" aria-hidden="true">' + html + "</span>";
@@ -843,17 +845,17 @@ strong,b{font-weight:700}
     reset(); playing = true;
     later(function () {
       root.classList.add("mn-run");
-      var last = 1 + (n - 1) * 0.5;
+      var last = 0.85 + (n - 1) * 0.4;
       reelEls.forEach(function (r, i) {
         r.classList.add("mn-blur");
-        later(function () { r.classList.remove("mn-blur"); }, (1 + i * 0.5 - 0.4) * 1000);
+        later(function () { r.classList.remove("mn-blur"); }, (0.85 + i * 0.4 - 0.4) * 1000);
       });
       later(function () {
         reelEls.forEach(function (r) { if (r.classList.contains("mn-lead")) r.classList.add("mn-gone"); });
-      }, last * 1000 + 150);
-      later(function () { root.classList.add("mn-pop"); }, last * 1000 + 450);
-      later(function () { root.classList.add("mn-done"); }, last * 1000 + 700);
-    }, 750);
+      }, (0.85 + Math.max(n - 2, 0) * 0.4) * 1000);
+      later(function () { root.classList.add("mn-pop"); }, last * 1000 + 250);
+      later(function () { root.classList.add("mn-done"); }, last * 1000 + 450);
+    }, 650);
   }
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
