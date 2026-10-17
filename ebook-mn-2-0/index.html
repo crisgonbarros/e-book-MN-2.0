@@ -379,6 +379,29 @@ strong,b{font-weight:700}
 @keyframes pop{from{opacity:0;scale:.82}to{opacity:1;scale:1}}
 @keyframes ring{0%,62%{opacity:0;transform:scale(1)}68%{opacity:.5}100%{opacity:0;transform:scale(1.14,1.35)}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+/* ---------- preço caça-níquel (dobra de investimento) ---------- */
+.mn-price{--mn-num:#fff;--mn-cur:#fff;--mn-text:#d9c7f5;--mn-accent:#ffd633;--mn-h:1em}
+.mn-price .mn-cur,.mn-price .mn-cents{color:var(--mn-cur)}
+.mn-price .mn-big{color:var(--mn-num)}
+.mn-price .mn-was,.mn-price .mn-alt{color:var(--mn-text)}
+.mn-price .mn-via{color:var(--mn-accent)}
+.mn-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mn-reels{display:inline-flex;line-height:var(--mn-h);height:var(--mn-h);vertical-align:bottom}
+.mn-reel{position:relative;display:block;width:var(--mn-w,.62em);height:var(--mn-h);overflow:hidden;text-align:center}
+.mn-strip{display:block;transform:translateY(calc(var(--mn-from)*var(--mn-h)*-1));will-change:transform}
+.mn-strip i{display:block;height:var(--mn-h);line-height:var(--mn-h);font-style:normal}
+.mn-run .mn-strip{transform:translateY(calc(var(--mn-to)*var(--mn-h)*-1));transition:transform var(--mn-dur) cubic-bezier(.12,.62,.18,1)}
+.mn-strip{transition:filter .28s ease}
+.mn-reel.mn-blur .mn-strip{filter:blur(1.8px)}
+.mn-reel.mn-blur{-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
+.mn-reel{transition:width .5s ease,opacity .4s ease}
+.mn-reel.mn-gone{width:0;opacity:0}
+.mn-notrans,.mn-notrans *{transition:none!important;animation:none!important}
+.mn-armed .mn-was,.mn-armed .mn-alt,.mn-armed .mn-via{opacity:0;transform:translateY(6px)}
+.mn-armed.mn-done .mn-was,.mn-armed.mn-done .mn-alt,.mn-armed.mn-done .mn-via{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
+.mn-armed.mn-done .mn-alt{transition-delay:.12s}
+.mn-armed.mn-pop .mn-now{animation:mn-pop .38s cubic-bezier(.2,.8,.3,1.4)}
+@keyframes mn-pop{0%{scale:1}45%{scale:1.13}100%{scale:1}}
 .js .rv{opacity:0}
 .js .rv.in{animation:rise .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s)}
 .js .rv-pop.in{animation-name:pop}
@@ -614,10 +637,10 @@ strong,b{font-weight:700}
     <div class="offer">
       <div class="offer-card">
         <p class="promise">Resolver a confusão do seu negócio começa por um diagnóstico honesto, sem teoria solta, sem promessas irreais e sem complicação.</p>
-        <div class="price">
-          <div class="was">De <s>R$ 247,00</s> por apenas:</div>
-          <div class="now"><span class="cur">R$</span><span class="big">37</span><span class="cents">,00</span><span class="via">à vista no Pix</span></div>
-          <div class="alt">ou <b>10x de R$ 4,45</b> no cartão de crédito</div>
+        <div class="price mn-price" data-de="247" data-por="37">
+          <div class="was mn-was">De <s>R$ 247,00</s> por apenas:</div>
+          <div class="now mn-now"><span class="cur mn-cur">R$</span><span class="big mn-big">37</span><span class="cents mn-cents">,00</span><span class="via mn-via">à vista no Pix</span></div>
+          <div class="alt mn-alt">ou <b>10x de R$ 4,45</b> no cartão de crédito</div>
         </div>
         <a class="btn btn--block" data-cta href="#oferta">Comprar agora</a>
         <div class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Compra <b>100%</b> segura</div>
@@ -764,6 +787,83 @@ strong,b{font-weight:700}
     </nav>
   </div>
 </footer>
+
+<script>
+/* Preço caça-níquel: gira de data-de até data-por toda vez que a dobra entra na tela. */
+(function () {
+  var root = document.querySelector(".mn-price[data-de][data-por]");
+  if (!root || !("IntersectionObserver" in window)) return;
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var big = root.querySelector(".mn-big"), was = root.querySelector(".mn-was s");
+  var de = String(root.getAttribute("data-de")).replace(/\D/g, ""), por = String(root.getAttribute("data-por")).replace(/\D/g, "");
+  if (!big || !de || !por) return;
+  var n = Math.max(de.length, por.length);
+  while (de.length < n) de = "0" + de;
+  while (por.length < n) por = "0" + por;
+  var fmt = function (v) { return String(parseInt(v, 10)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); };
+  if (was) was.textContent = "R$ " + fmt(de) + ",00";
+  var label = String(parseInt(por, 10));
+  var reels = [], html = "";
+  for (var i = 0; i < n; i++) {
+    var cycles = 2 + i, items = "";
+    for (var k = 0; k < (cycles + 1) * 10; k++) items += "<i>" + (k % 10) + "</i>";
+    var lead = por.charAt(i) === "0" && /^0*$/.test(por.slice(0, i + 1));
+    html += '<span class="mn-reel' + (lead ? " mn-lead" : "") + '" style="--mn-from:' + de.charAt(i) +
+      ";--mn-to:" + (parseInt(por.charAt(i), 10) + 10 * cycles) + ";--mn-dur:" + (1 + i * 0.5).toFixed(2) +
+      's"><span class="mn-strip">' + items + "</span></span>";
+  }
+  big.innerHTML = '<span class="mn-sr">' + label + '</span><span class="mn-reels" aria-hidden="true">' + html + "</span>";
+  var reelEls = [].slice.call(big.querySelectorAll(".mn-reel"));
+  // largura de cada rolo = largura real do dígito final (o "37" fica igual ao texto original)
+  function measure() {
+    var fs = parseFloat(getComputedStyle(big).fontSize) || 16;
+    reelEls.forEach(function (r, i) {
+      var t = document.createElement("span");
+      t.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap";
+      t.textContent = por.charAt(i); big.appendChild(t);
+      r.style.setProperty("--mn-w", (t.getBoundingClientRect().width / fs).toFixed(3) + "em");
+      big.removeChild(t);
+    });
+  }
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  root.classList.add("mn-armed");
+  var timers = [], playing = false;
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    root.classList.add("mn-notrans");
+    root.classList.remove("mn-run", "mn-done", "mn-pop");
+    reelEls.forEach(function (r) { r.classList.remove("mn-gone", "mn-blur"); });
+    void root.offsetWidth;
+    root.classList.remove("mn-notrans");
+    playing = false;
+  }
+  function play() {
+    reset(); playing = true;
+    later(function () {
+      root.classList.add("mn-run");
+      var last = 1 + (n - 1) * 0.5;
+      reelEls.forEach(function (r, i) {
+        r.classList.add("mn-blur");
+        later(function () { r.classList.remove("mn-blur"); }, (1 + i * 0.5 - 0.4) * 1000);
+      });
+      later(function () {
+        reelEls.forEach(function (r) { if (r.classList.contains("mn-lead")) r.classList.add("mn-gone"); });
+      }, last * 1000 + 150);
+      later(function () { root.classList.add("mn-pop"); }, last * 1000 + 450);
+      later(function () { root.classList.add("mn-done"); }, last * 1000 + 700);
+    }, 750);
+  }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting && e.intersectionRatio >= 0.6) { if (!playing) play(); }
+      else if (!e.isIntersecting) { reset(); }
+    });
+  }, { threshold: [0, 0.6] });
+  io.observe(root);
+})();
+</script>
 
 <script>
 /* ==========================================================
