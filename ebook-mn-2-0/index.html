@@ -411,7 +411,7 @@ strong,b{font-weight:700}
 .js .rv.in{animation:rise .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s)}
 .js .rv-pop.in{animation-name:pop}
 .btn{position:relative}
-.btn[data-cta]::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--buy);opacity:0;pointer-events:none;animation:ring 3.4s ease-out infinite}
+.btn[data-cta]::after,.btn[data-go]::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--buy);opacity:0;pointer-events:none;animation:ring 3.4s ease-out infinite}
 .top .btn::after{display:none}
 .final .rocket.in{animation:pop .6s cubic-bezier(.2,.7,.2,1) both,floaty 5s ease-in-out .7s infinite}
 .chapters li,.pillars li,.pain-list li,.cycle li,.fit>div,.faq details{transition:transform .25s,box-shadow .25s,border-color .25s}
@@ -442,7 +442,7 @@ strong,b{font-weight:700}
   <div class="wrap">
     <a href="#topo" aria-label="Meu Negócio 2.0"><img src="../img/logo.png" alt="Meu Negócio 2.0" width="110" height="62"></a>
     <div class="cta-box">
-      <a class="btn btn--sm" data-cta href="#oferta">Comprar agora</a>
+      <a class="btn btn--sm" data-go href="#oferta">Comprar agora</a>
       <div class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Compra <b>100%</b> segura</div>
     </div>
   </div>
@@ -459,13 +459,8 @@ strong,b{font-weight:700}
         <p class="lead">Um <strong>e-book de diagnóstico guiado</strong> para o empresário que trabalha muito, colhe pouco e carrega o negócio nas costas.<span class="lead-more"> Entenda <strong>onde você está</strong> e <strong>por que tem decidido como decide</strong>.</span></p>
 
         <div class="buy-row">
-          <div class="price" aria-label="Preço">
-          <div class="was">De <s>R$ 247,00</s> por apenas:</div>
-          <div class="now"><span class="cur">R$</span><span class="big">37</span><span class="cents">,00</span><span class="via">à vista no Pix</span></div>
-          <div class="alt">ou <b>10x de R$ 4,45</b> no cartão de crédito</div>
-        </div>
           <div class="hero-actions">
-          <a class="btn btn--block" data-cta href="#oferta">Comprar agora</a>
+          <a class="btn btn--block" data-go href="#oferta">Comprar agora</a>
           <div class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Compra <b>100%</b> segura</div>
         </div>
         </div>
@@ -513,7 +508,7 @@ strong,b{font-weight:700}
       <li>Tem a sensação constante de que algo está errado, mas <strong>não consegue identificar exatamente o quê</strong></li>
       <li>Já quebrou a cabeça com vendas, marketing, preço e o problema <strong>continua o mesmo</strong></li>
     </ul>
-    <div class="cta-row"><a class="btn" data-cta href="#oferta">Comprar agora</a></div>
+    <div class="cta-row"><a class="btn" data-go href="#oferta">Comprar agora</a></div>
     <p class="closing">O problema não é o mercado, a concorrência ou a economia. <strong>É falta de clareza sobre onde o seu negócio está sangrando.</strong> E clareza começa com um diagnóstico honesto.</p>
   </div>
 </section>
@@ -763,7 +758,7 @@ strong,b{font-weight:700}
       <div class="alt">à vista no Pix, ou <b>10x de R$ 4,45</b> no cartão</div>
     </div>
     <div class="hero-actions">
-      <a class="btn btn--block" data-cta href="#oferta">Comprar agora</a>
+      <a class="btn btn--block" data-go href="#oferta">Comprar agora</a>
       <div class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Compra <b>100%</b> segura, com 7 dias de garantia</div>
     </div>
   </div>
@@ -889,6 +884,7 @@ var CONFIG = {
 };
 
 (function () {
+  // Só o botão da dobra de preço (data-cta) leva ao checkout; os demais (data-go) rolam até #oferta.
   if (CONFIG.checkout) {
     document.querySelectorAll("[data-cta]").forEach(function (a) {
       a.setAttribute("href", CONFIG.checkout);
