@@ -152,10 +152,16 @@ p{margin:0 0 1rem}
 .cat{display:grid;grid-template-columns:62px 1fr;align-items:center;gap:8px;font-size:.7rem;color:var(--txt-2)}
 .cat .b{height:12px;border-radius:6px;background:var(--linha);overflow:hidden}
 .cat .b i{display:block;height:100%;width:0;border-radius:6px;background:var(--c);transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
-.flutuante{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;font-size:.8rem;line-height:1.3;animation:sobe 6s ease-in-out infinite}
-.flutuante b{display:block;font-size:.85rem}
-.flutuante .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:1rem;background:var(--vidro-forte);border:1px solid var(--borda)}
-.f1{left:-28px;bottom:-46px}.f2{right:34px;top:-50px;animation-delay:-3s}
+.baloes{position:absolute;left:50%;top:50%;width:0;height:0;z-index:3;pointer-events:none}
+.balao{position:absolute;left:0;top:0;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:14px;font-size:.8rem;line-height:1.3;white-space:nowrap;color:var(--txt-2);background:var(--vidro-forte);border:1px solid var(--borda);box-shadow:var(--sombra);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);opacity:0;transform:translate(-50%,-50%) scale(.6)}
+.balao b{display:block;font-size:.86rem;color:var(--txt)}
+.balao em{font-style:normal;font-weight:700;color:var(--txt)}
+.balao.rec em{color:var(--verde-txt)}
+.balao .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1.05rem;background:var(--vidro);border:1px solid var(--borda)}
+.balao.cima{animation:baloeCima 4.2s cubic-bezier(.25,.8,.3,1) forwards}
+.balao.baixo{animation:baloeBaixo 4.2s cubic-bezier(.25,.8,.3,1) forwards}
+@keyframes baloeCima{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}14%{opacity:1;transform:translate(-50%,-70%) scale(1)}72%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - var(--dist,190px))) scale(.96)}}
+@keyframes baloeBaixo{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}14%{opacity:1;transform:translate(-50%,-30%) scale(1)}72%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% + var(--dist,190px))) scale(.96)}}
 @keyframes sobe{50%{transform:translateY(-8px)}}
 
 /* faixa de números */
@@ -288,8 +294,7 @@ p{margin:0 0 1rem}
   .grade{grid-template-columns:repeat(2,1fr)}
   .numeros{grid-template-columns:repeat(2,1fr)}
   .oferta .preco{border-left:0;border-top:1px solid var(--borda)}
-  .f1{left:-6px}.f2{right:-6px}
-  .recurso .img .moldura{transform:none}
+    .recurso .img .moldura{transform:none}
 }
 @media (max-width:720px){
   body{font-size:16px}
@@ -300,7 +305,7 @@ p{margin:0 0 1rem}
   .foot{padding-bottom:96px}
   .kpis{gap:7px}.kpi{padding:10px}.kpi small{font-size:.6rem}
   .graficos{grid-template-columns:1fr}
-  .flutuante{display:none}
+  .balao{font-size:.74rem;padding:8px 12px 8px 8px}.balao b{font-size:.8rem}.balao .ic{width:30px;height:30px}
   .duas{grid-template-columns:1fr}
 }
 @media (max-width:460px){.grade{grid-template-columns:1fr}.numeros .vidro{padding:18px 16px}}
@@ -379,8 +384,7 @@ p{margin:0 0 1rem}
             </div>
           </div>
         </div>
-        <div class="flutuante vidro f1"><span class="ic">💡</span><span><b>Conta de energia</b>vence amanhã · R$ 280</span></div>
-        <div class="flutuante vidro f2"><span class="ic">💳</span><span><b>Fatura do cartão</b>fecha dia 3</span></div>
+        <div class="baloes" id="baloes" aria-hidden="true"></div>
       </div>
     </div>
   </div>
@@ -731,10 +735,52 @@ var CONFIG = {
     });
   }
 
+  /* balões de vencimento: saem do meio do painel, um sobe, o outro desce, sem parar */
+  var BALOES = [
+    ["💡", "Conta de energia", "vence amanhã · <em>R$ 280</em>"],
+    ["💳", "Fatura do cartão", "fecha em 3 dias"],
+    ["🏠", "Aluguel", "vence semana que vem · <em>R$ 1.800</em>"],
+    ["🎓", "Mensalidade da escola", "vence 5 de fevereiro · <em>R$ 950</em>"],
+    ["📶", "Internet", "vence dia 10 · <em>R$ 120</em>"],
+    ["💼", "Salário", "cai dia 5 · <em>R$ 6.500</em>", "rec"]
+  ];
+  function iniciarBaloes() {
+    var box = document.getElementById("baloes"), painel = document.getElementById("painel");
+    if (!box) return;
+    var i = 0, cima = true;
+    function novo() {
+      var d = BALOES[i % BALOES.length]; i++;
+      var el = document.createElement("div");
+      el.className = "balao " + (cima ? "cima" : "baixo") + (d[3] ? " " + d[3] : "");
+      el.style.setProperty("--dist", Math.round(painel.offsetHeight * 0.62) + "px");
+      el.innerHTML = '<span class="ic">' + d[0] + '</span><span><b>' + d[1] + '</b>' + d[2] + '</span>';
+      box.appendChild(el);
+      cima = !cima;
+      if (!reduz) setTimeout(function () { el.remove(); }, 4400);
+    }
+    if (reduz) { cima = true; var el0; novo(); el0 = box.lastChild; el0.style.animation = "none"; el0.style.opacity = 1; el0.style.transform = "translate(-50%,-50%)"; return; }
+    novo();
+    setInterval(function () { if (!document.hidden) novo(); }, 1900);
+  }
+
   var painelLigado = false;
   function ligarPainel() {
     if (painelLigado) return; painelLigado = true;
-    document.querySelectorAll("#painel [data-conta]").forEach(function (el) { contar(el, +el.getAttribute("data-conta"), brl, 1600); });
+    var ks = document.querySelectorAll("#painel [data-conta]"), E = +ks[0].getAttribute("data-conta"), S = +ks[1].getAttribute("data-conta");
+    if (reduz) { ks[0].textContent = brl(E); ks[1].textContent = brl(S); ks[2].textContent = brl(E - S); }
+    else {
+      var t0 = null;
+      var anim = function (t) {
+        if (!t0) t0 = t;
+        var p = Math.min(1, (t - t0) / 2200);
+        var pe = 1 - Math.pow(1 - p, 3), ps = 1 - Math.pow(1 - Math.min(1, p * 1.35), 2);
+        var e = E * pe, sa = S * ps;
+        ks[0].textContent = brl(e); ks[1].textContent = brl(sa); ks[2].textContent = brl(Math.max(0, e - sa));
+        if (p < 1) requestAnimationFrame(anim);
+      };
+      requestAnimationFrame(anim);
+    }
+    iniciarBaloes();
     document.querySelectorAll("#painel [data-w]").forEach(function (el, i) { setTimeout(function () { el.style.width = el.getAttribute("data-w") + "%"; }, 120 + i * 90); });
     setTimeout(function () { alturas(false); }, 200);
     if (!reduz) setInterval(function () { if (!document.hidden) alturas(true); }, 2600);
