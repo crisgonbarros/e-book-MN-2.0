@@ -93,6 +93,7 @@ section{padding:clamp(56px,8vw,96px) 0}
 /* produtos */
 .products{background:var(--bg)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media (min-width:1001px){.grid>.card:last-child:nth-child(3n+1){grid-column:2}}
 .card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease,border-color .3s}
 .card:hover{transform:translateY(-8px);box-shadow:var(--shadow-hover);border-color:var(--sky-2)}
 .card:active{transform:translateY(-3px) scale(.99)}
@@ -100,6 +101,7 @@ section{padding:clamp(56px,8vw,96px) 0}
 .visual::after{content:"";position:absolute;inset:0;background:radial-gradient(260px 160px at 20% 0%,rgba(255,255,255,.22),transparent 70%)}
 .visual img{position:relative;z-index:1;height:170px;width:auto;aspect-ratio:800/1250;border-radius:8px;box-shadow:0 18px 30px -8px rgba(0,0,0,.5);transform:rotate(-4deg);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .card:hover .visual img{transform:rotate(0) scale(1.05)}
+.visual img.sq{aspect-ratio:1/1;height:172px}
 .visual svg{position:relative;z-index:1;width:84px;height:84px;color:#fff;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .card:hover .visual svg{transform:scale(1.1) rotate(4deg)}
 .visual img.logo{height:auto;width:auto;max-width:78%;max-height:110px;aspect-ratio:auto;border-radius:0;box-shadow:none;transform:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));transition:transform .4s cubic-bezier(.2,.8,.2,1)}
@@ -258,24 +260,23 @@ section{padding:clamp(56px,8vw,96px) 0}
   <div class="wrap">
     <div class="sec-head reveal"><p class="kicker">Produtos</p><h2>Escolha por onde começar</h2></div>
     <div class="grid">
-
-      <article class="card reveal" style="--d:0ms">
-        <div class="visual"><img src="img/capa-ebook.webp" width="800" height="1250" alt="Capa do E-book Meu Negócio 2.0"></div>
-        <div class="card-body"><span class="tag">E-book</span><h3>Meu Negócio 2.0</h3></div>
-        <div class="card-foot"><a class="btn btn--primary" href="/ebook-mn-2-0/">Conhecer o e-book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-      </article>
-
-      <article class="card card--soon reveal" style="--d:120ms">
+      <article class="card card--soon reveal" style="--d:0ms">
         <span class="badge">Em breve</span>
         <div class="visual"><img class="logo" src="img/logo-wide.png" width="600" height="338" alt="Logo do Curso Meu Negócio 2.0"></div>
         <div class="card-body"><span class="tag">Curso</span><h3>Meu Negócio 2.0</h3><p class="note">Em breve, novas turmas.</p></div>
         <div class="card-foot"><a class="btn btn--ghost" data-link="vip" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>Avisar quando abrir</a></div>
       </article>
 
+      <article class="card reveal" style="--d:120ms">
+        <div class="visual"><img src="img/capa-ebook.webp" width="800" height="1250" alt="Capa do E-book Meu Negócio 2.0"></div>
+        <div class="card-body"><span class="tag">E-book</span><h3>Meu Negócio 2.0</h3></div>
+        <div class="card-foot"><a class="btn btn--primary" href="/ebook-mn-2-0/">Conhecer o e-book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </article>
+
       <article class="card reveal" style="--d:240ms">
-        <div class="visual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 10h18M9 4v16M15 10v10"/></svg></div>
-        <div class="card-body"><span class="tag">Curso</span><h3>Gestão e Controle com IA: Como Fazer Planilhas com Inteligência Artificial</h3></div>
-        <div class="card-foot"><a class="btn btn--primary" data-link="planilhas" href="#produtos">Quero conhecer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+        <div class="visual"><img class="sq" src="img/capa-controle-financeiro.webp" width="600" height="600" alt="Capa do Controle Financeiro"></div>
+        <div class="card-body"><span class="tag">Sistema</span><h3>Controle Financeiro</h3></div>
+        <div class="card-foot"><a class="btn btn--primary" href="/controle-financeiro/">Quero conhecer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
       </article>
 
       <article class="card reveal" style="--d:0ms">
@@ -285,12 +286,18 @@ section{padding:clamp(56px,8vw,96px) 0}
       </article>
 
       <article class="card reveal" style="--d:120ms">
+        <div class="visual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 10h18M9 4v16M15 10v10"/></svg></div>
+        <div class="card-body"><span class="tag">Curso</span><h3>Gestão e Controle com IA: Como Fazer Planilhas com Inteligência Artificial</h3></div>
+        <div class="card-foot"><a class="btn btn--primary" data-link="planilhas" href="#produtos">Quero conhecer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </article>
+
+      <article class="card reveal" style="--d:240ms">
         <div class="visual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0110.5 4h3A1.5 1.5 0 0115 5.5V7"/><path d="M3 13h18"/><path d="M10.5 13v1.5h3V13"/></svg></div>
         <div class="card-body"><span class="tag">Consultoria</span><h3>Consultoria Empresarial</h3></div>
         <div class="card-foot"><a class="btn btn--primary" data-link="consultoria" href="#produtos">Quero conhecer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
       </article>
 
-      <article class="card reveal" style="--d:240ms">
+      <article class="card reveal" style="--d:0ms">
         <div class="visual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19c.6-3 2.7-4.7 5.5-4.7s4.9 1.7 5.5 4.7"/><circle cx="17" cy="9.5" r="2.4"/><path d="M16 14.4c2.6-.2 4.5 1.2 5 4"/></svg></div>
         <div class="card-body"><span class="tag">Mentoria</span><h3>Mentoria Individual</h3></div>
         <div class="card-foot"><a class="btn btn--primary" data-link="mentoria" href="#produtos">Quero conhecer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
